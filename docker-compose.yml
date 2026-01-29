@@ -12,5 +12,17 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
 
+  bot:
+    build: .
+    container_name: family_bot
+    restart: always
+    env_file:
+      - .env
+    environment:
+      # важно: внутри docker имя хоста БД = имя сервиса, то есть "db"
+      DATABASE_URL: postgresql+asyncpg://family_bot:family_bot@db:5432/family_bot
+    depends_on:
+      - db
+
 volumes:
   pg_data:
