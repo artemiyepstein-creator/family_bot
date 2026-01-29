@@ -20,7 +20,7 @@ services:
       - .env
     environment:
       # важно: внутри docker имя хоста БД = имя сервиса, то есть "db"
-      DATABASE_URL: postgresql+asyncpg://family_bot:family_bot@db:5432/family_bot
+      DATABASE_URL: postgresql+asyncpg://postgres:StArt0406003@db:5432/family_bot
     depends_on:
       - db
 
