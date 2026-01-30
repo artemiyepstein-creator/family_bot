@@ -56,10 +56,10 @@ async def add_from_text(message: Message, state: FSMContext, **data: Any):
     await state.clear()
 
     if len(titles) == 1:
-        await message.answer(f"Добавил: #{added_ids[0]} — {titles[0]}")
+        await message.answer(f"Добавил: {titles[0]}")
     else:
         await message.answer(
-            "Добавил:\n" + "\n".join(f"#{i} — {t}" for i, t in zip(added_ids, titles))
+            "Добавил:\n" + "\n".join(f"• {t}" for t in titles)
         )
     
     await message.answer("Готово ✅", reply_markup=main_menu_kb())
@@ -88,7 +88,7 @@ async def cmd_buy(message: Message, **data: Any):
         service = ShoppingService(session)
         item = await service.add(family_id=message.chat.id, user_id=message.from_user.id, title=title)
 
-    await message.answer(f"Добавил: #{item.id} — {item.title}")
+    await message.answer(f"Добавил: {item.title}")
 
 
 @router.message(Command("list"))
@@ -109,7 +109,7 @@ async def cmd_list(message: Message, **data: Any):
     await message.answer("Список покупок:")
     for it in items:
         await message.answer(
-            f"#{it.id} — {it.title}",
+            f"{it.title}",
             reply_markup=shopping_item_kb(item_id=it.id, is_done=it.is_done),
         )
 

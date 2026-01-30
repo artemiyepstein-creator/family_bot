@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, date
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, String, UniqueConstraint, func
+from sqlalchemy import BigInteger, DateTime, ForeignKey, String, UniqueConstraint, func, Date
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -32,3 +32,7 @@ class Member(Base):
         server_default=func.now(),
         nullable=False
     )
+
+    short_name: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    gender: Mapped[str | None] = mapped_column(String(16), nullable=True)
+    birth_date: Mapped[date | None] = mapped_column(Date, nullable=True)

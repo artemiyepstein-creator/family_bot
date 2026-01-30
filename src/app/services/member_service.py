@@ -29,3 +29,15 @@ class MemberService:
             role=role,
         )
         return role
+    
+    async def get_member(self, family_id: int, telegram_id: int):
+        return await self.repo.get_by_family_and_telegram(family_id, telegram_id)
+
+    async def update_profile(self, family_id: int, telegram_id: int, short_name: str, gender: str, birth_date):
+        return await self.repo.update_profile(
+            family_id=family_id,
+            telegram_id=telegram_id,
+            short_name=short_name,
+            gender=gender,
+            birth_date=birth_date,
+        )

@@ -39,3 +39,22 @@ class MemberRepository:
         stmt = select(func.count()).select_from(Member).where(Member.family_id == family_id)
         result = await self.session.execute(stmt)
         return int(result.scalar_one())
+    
+    async def update_profile(
+        self,
+        family_id: int,
+        telegram_id: int,
+        short_name: str,
+        gender: str,
+        birth_date,
+    ) -> Member:
+        member = await self.get_by_family_and_telegram(family_id, telegram_id)
+        if member is None:
+            raise ValueError("Member not found")
+
+        member.short_name = short_name
+        member.gender = gender
+        member.birth_date = birth_date
+
+        await self.session.commit()
+        return member

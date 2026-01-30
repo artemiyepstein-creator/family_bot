@@ -4,6 +4,8 @@ from aiogram import Bot, Dispatcher # Импортируем из библиот
 from aiogram.fsm.storage.memory import MemoryStorage
 from app.bot.routers.start import router
 from app.bot.routers.shopping import router as shopping_router
+from app.bot.routers.registration import router as registration_router
+
 
 from app.config import get_settings
 from app.db.session import create_engine, create_tables, create_sessionmaker
@@ -23,6 +25,7 @@ async def main():
     dp.workflow_data["sessionmaker"] = sessionmaker
     dp.include_router(router)
     dp.include_router(shopping_router)
+    dp.include_router(registration_router)
     
     
     await dp.start_polling(bot)
