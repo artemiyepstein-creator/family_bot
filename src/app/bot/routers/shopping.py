@@ -11,6 +11,7 @@ from app.bot.keyboards.inline import shopping_item_kb
 from app.bot.fsm.shopping_states import ShoppingStates
 from app.bot.callbacks import ShopCB
 from app.bot.keyboards.reply import main_menu_kb
+from app.services.family_service import FamilyService
 
 router = Router()
 
@@ -42,6 +43,12 @@ async def add_from_text(message: Message, state: FSMContext, **data: Any):
 
     added_ids: list[int] = []
     async with sessionmaker() as session:
+        family_service = FamilyService(session)
+        await family_service.ensure_family_exists(
+        family_id=message.chat.id,
+        title=message.chat.title or "Без названия",
+    )
+        
         service = ShoppingService(session)
 
         # добавляем каждую позицию
