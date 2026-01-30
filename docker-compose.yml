@@ -13,7 +13,9 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   bot:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     container_name: family_bot
     restart: always
     env_file:
