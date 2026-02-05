@@ -31,6 +31,7 @@ async def add_from_text(message: Message, state: FSMContext, **data: Any):
     parts = [p.strip() for p in raw.split(",")]
     # 2) убираем пустые
     titles = [p for p in parts if p]
+    titles = [t[:1].upper() + t[1:] if t else t for t in titles]
 
     if not titles:
         await message.answer("Не вижу названий. Пример: молоко, хлеб, яйца")
